@@ -14,7 +14,7 @@ const router = createRouter({
       component: HomePage,
     },
     { path: "/createtask", component: TheCreateTask },
-    { path: "/task", component: InfoTask },
+    { path: "/task/:taskid", component: InfoTask, name: "task" },
   ],
   linkActiveClass: "active",
   linkExactActiveClass: "active",

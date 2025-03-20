@@ -1,22 +1,45 @@
 <template>
   <div class="task">
-    <h2 class="h2">Название</h2>
+    <h2 class="h2">{{ task.name }}</h2>
     <div class="status">
-      <span>Статус </span>
-      <AppActive class="primary" />
+      <span>Статус: </span>
+      <AppActive :cl="clss(task.act)" />
     </div>
-    <span class="data">Дедлайн</span>
-    <span class="text">Описание</span>
+    <span class="data">Дедлайн: {{ task.dt }}</span>
+
+    <span class="text">Описание: {{ task.txt }}</span>
     <div class="btn">
-      <Button title="Взять в работу" stil="prozr"></Button>
-      <Button title="Завершить работу" stil="def"></Button>
-      <Button title="Отменить" stil="red"></Button>
+      <Button
+        title="Взять в работу"
+        stil="prozr"
+        @click="job('warning')"
+      ></Button>
+      <Button
+        title="Завершить работу"
+        stil="def"
+        @click="job('activ')"
+      ></Button>
+      <Button title="Отменить" stil="red" @click="job('noactiv')"></Button>
     </div>
   </div>
 </template>
 <script setup>
 import Button from "@/ui/Button.vue";
 import AppActive from "../ui/AppActive.vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { useClss } from "@/use/useCl";
+const route = useRoute();
+const store = useStore();
+const taskId = route.params.taskid;
+const task = computed(() => store.getters.getTaskByID(taskId));
+const clss = (name) => {
+  return useClss(name);
+};
+const job = (activName) => {
+  store.dispatch("chFlag", { id: taskId, flag: activName });
+};
 </script>
 <style scoped>
 .task {

@@ -1,12 +1,12 @@
 <template>
   <div class="tack">
     <div class="one">
-      <h2 class="h2">Наименование задачи</h2>
-      <AppActive class="primary" />
+      <h2 class="h2">{{ name }}</h2>
+      <AppActive :cl="clss(aciv)" />
     </div>
-    <p class="p">Дата</p>
+    <p class="p">{{ dt }}</p>
     <div class="btn">
-      <Button title="Посмотреть" @click="goToInfo" />
+      <Button title="Посмотреть" @click="goToInfo(id)" />
     </div>
   </div>
 </template>
@@ -14,9 +14,30 @@
 import AppActive from "@/ui/AppActive.vue";
 import Button from "@/ui/Button.vue";
 import { useRouter } from "vue-router";
+import { useClss } from "@/use/useCl";
+const props = defineProps({
+  name: {
+    type: String,
+  },
+  dt: {
+    type: String,
+  },
+  txt: {
+    type: String,
+  },
+  id: {
+    type: String,
+  },
+  aciv: {
+    type: String,
+  },
+});
 const router = useRouter();
-const goToInfo = () => {
-  router.push("/task");
+const goToInfo = (tid) => {
+  router.push({ name: "task", params: { taskid: tid } });
+};
+const clss = (name) => {
+  return useClss(name);
 };
 </script>
 <style scoped>
@@ -28,7 +49,7 @@ const goToInfo = () => {
     "btn";
   width: 900px;
   background-color: burlywood;
-  margin: 4rem auto;
+  margin: 1rem auto;
   border-radius: 8px;
   padding: 10px;
 }
@@ -54,7 +75,7 @@ const goToInfo = () => {
   font-size: 16px;
 }
 .p {
-  font-size: 20px;
+  font-size: 12px;
   margin: 0;
   margin-bottom: 15px;
 }

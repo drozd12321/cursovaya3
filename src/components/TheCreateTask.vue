@@ -13,23 +13,38 @@
       <label for="text">Описание</label>
       <textarea name="text" id="text" v-model="tsk.txt"></textarea>
     </div>
-    <Button title="Создать" type="submit" />
+    <Button title="Создать" type="submit" :dis="!formDone" />
   </form>
 </template>
 <script setup>
 import Button from "@/ui/Button.vue";
 import { v4 as uuidv4 } from "uuid";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-const loadTask = () => {
-  tsk.id = uuidv4();
-  console.log(tsk);
-};
-const tsk = reactive({
+
+const initialState = reactive({
   name: "",
   dt: "",
   txt: "",
+});
+const loadTask = () => {
+  const dedl = new Date(tsk.dt);
+  if (new Date() >= dedl) {
+    tsk.act = "noactiv";
+    console.log(tsk.dt);
+    console.log(new Date());
+  } else {
+    tsk.act = "default";
+  }
+  tsk.id = uuidv4();
+
+  store.commit("addTask", { ...tsk });
+  Object.assign(tsk, initialState);
+};
+const tsk = reactive({ ...initialState });
+const formDone = computed(() => {
+  return tsk.name.trim() && tsk.txt.trim() && tsk.dt.trim();
 });
 </script>
 <style scoped>

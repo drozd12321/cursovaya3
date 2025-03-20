@@ -1,5 +1,11 @@
 <template>
-  <button class="btn" :class="stil" @click="$emit('click')" type="submit">
+  <button
+    :disabled="dis"
+    class="btn"
+    :class="stil"
+    @click="$emit('click')"
+    type="submit"
+  >
     {{ title }}
   </button>
 </template>
@@ -13,6 +19,10 @@ const props = defineProps({
   type: {
     type: String,
     default: "submit",
+  },
+  dis: {
+    type: Boolean,
+    default: false,
   },
 });
 const emit = defineEmits(["click"]);
@@ -35,5 +45,9 @@ const emit = defineEmits(["click"]);
 }
 .red {
   background-color: coral;
+}
+button:disabled {
+  background-color: rgb(104, 72, 72);
+  cursor: not-allowed;
 }
 </style>
