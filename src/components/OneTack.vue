@@ -2,13 +2,23 @@
   <div class="tack">
     <div class="one">
       <h2 class="h2">Наименование задачи</h2>
-      <div class="act danger">Активен</div>
+      <AppActive class="primary" />
     </div>
     <p class="p">Дата</p>
-    <button class="btn">Посмотреть</button>
+    <div class="btn">
+      <Button title="Посмотреть" @click="goToInfo" />
+    </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import AppActive from "@/ui/AppActive.vue";
+import Button from "@/ui/Button.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const goToInfo = () => {
+  router.push("/task");
+};
+</script>
 <style scoped>
 .tack {
   display: grid;
@@ -16,7 +26,7 @@
     "one"
     "p"
     "btn";
-  width: 80%;
+  width: 900px;
   background-color: burlywood;
   margin: 4rem auto;
   border-radius: 8px;
@@ -33,22 +43,10 @@
   grid-area: h2;
   font-weight: 400;
 }
-.act {
-  grid-area: act;
 
-  padding: 7px;
-  border-radius: 8px;
-}
-.act.primary {
-  border: 2px solid green;
-}
-.act.danger {
-  border: 2px solid rgb(221, 4, 4);
-}
 .btn {
   grid-area: btn;
-  width: 40%;
-  padding: 7px;
+  width: 250px;
   border: none;
   border-radius: 6px;
   background-color: chocolate;

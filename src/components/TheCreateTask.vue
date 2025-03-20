@@ -3,27 +3,40 @@
     <h2 class="h2">Созать новую задачу</h2>
     <div class="nm">
       <label for="name">Название</label>
-      <input type="text" id="name" />
+      <input type="text" id="name" v-model="tsk.name" />
     </div>
     <div class="dt">
       <label for="dat">Дата дедлайна</label>
-      <input type="date" />
+      <input type="date" v-model="tsk.dt" />
     </div>
     <div class="txt">
       <label for="text">Описание</label>
-      <textarea name="text" id="text"></textarea>
+      <textarea name="text" id="text" v-model="tsk.txt"></textarea>
     </div>
-    <button type="submit" class="btn">Создать</button>
+    <Button title="Создать" type="submit" />
   </form>
 </template>
 <script setup>
-const loadTask = () => {};
+import Button from "@/ui/Button.vue";
+import { v4 as uuidv4 } from "uuid";
+import { reactive } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const loadTask = () => {
+  tsk.id = uuidv4();
+  console.log(tsk);
+};
+const tsk = reactive({
+  name: "",
+  dt: "",
+  txt: "",
+});
 </script>
 <style scoped>
 .grid {
   display: grid;
   background-color: burlywood;
-  width: 80%;
+  width: 900px;
   padding: 10px;
   border-radius: 5px;
   grid-template-areas:

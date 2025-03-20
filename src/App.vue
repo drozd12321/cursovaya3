@@ -4,6 +4,7 @@ import TheNavBar from "./components/TheNavBar.vue";
 import AllTascks from "./components/AllTascks.vue";
 import TheCreateTask from "./components/TheCreateTask.vue";
 import HomePage from "./components/HomePage.vue";
+import InfoTask from "./components/InfoTask.vue";
 </script>
 
 <template>

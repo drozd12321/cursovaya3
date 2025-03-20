@@ -3,6 +3,7 @@ import App from "@/App.vue";
 import HomePage from "@/components/HomePage.vue";
 import AllTascks from "@/components/AllTascks.vue";
 import TheCreateTask from "@/components/TheCreateTask.vue";
+import InfoTask from "@/components/InfoTask.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,7 @@ const router = createRouter({
       component: HomePage,
     },
     { path: "/createtask", component: TheCreateTask },
+    { path: "/task", component: InfoTask },
   ],
   linkActiveClass: "active",
   linkExactActiveClass: "active",
