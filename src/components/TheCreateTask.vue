@@ -28,7 +28,7 @@ const initialState = reactive({
   dt: "",
   txt: "",
 });
-const loadTask = () => {
+const loadTask = async () => {
   const dedl = new Date(tsk.dt);
   if (new Date() >= dedl) {
     tsk.act = "noactiv";
@@ -38,8 +38,7 @@ const loadTask = () => {
     tsk.act = "default";
   }
   tsk.id = uuidv4();
-
-  store.commit("addTask", { ...tsk });
+  await store.dispatch("AddTask", { ...tsk });
   Object.assign(tsk, initialState);
 };
 const tsk = reactive({ ...initialState });

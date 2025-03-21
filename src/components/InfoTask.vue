@@ -34,11 +34,12 @@ const route = useRoute();
 const store = useStore();
 const taskId = route.params.taskid;
 const task = computed(() => store.getters.getTaskByID(taskId));
+console.log(task.value.act);
 const clss = (name) => {
   return useClss(name);
 };
-const job = (activName) => {
-  store.dispatch("chFlag", { id: taskId, flag: activName });
+const job = async (activName) => {
+  await store.dispatch("chFlag", { idDb: task.value.idDb, flag: activName });
 };
 </script>
 <style scoped>
