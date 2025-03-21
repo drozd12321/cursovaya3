@@ -27,6 +27,6 @@ onMounted(async () => {
 </script>
 <style scoped>
 h2 {
-  margin: 1rem auto;
+  text-align: center;
 }
 </style>
