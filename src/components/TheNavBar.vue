@@ -21,6 +21,8 @@ a {
 }
 .head {
   display: grid;
+  position: sticky;
+  top: 0;
   grid-template-areas: "h3 div";
   justify-content: space-around;
   background-color: burlywood;

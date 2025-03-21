@@ -1,5 +1,5 @@
 <template>
-  <div class="task">
+  <div v-if="task" class="task">
     <h2 class="h2">{{ task.name }}</h2>
     <div class="status">
       <span>Статус: </span>
@@ -22,6 +22,9 @@
       <Button title="Отменить" stil="red" @click="job('noactiv')"></Button>
     </div>
   </div>
+  <div v-else>
+    <h2>Задачи {{ taskId }} нет</h2>
+  </div>
 </template>
 <script setup>
 import Button from "@/ui/Button.vue";
@@ -34,12 +37,15 @@ const route = useRoute();
 const store = useStore();
 const taskId = route.params.taskid;
 const task = computed(() => store.getters.getTaskByID(taskId));
-console.log(task.value.act);
 const clss = (name) => {
   return useClss(name);
 };
 const job = async (activName) => {
-  await store.dispatch("chFlag", { idDb: task.value.idDb, flag: activName });
+  await store.dispatch("chFlag", {
+    idDb: task.value.idDb,
+    flag: activName,
+    id: task.value.id,
+  });
 };
 </script>
 <style scoped>

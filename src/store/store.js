@@ -4,9 +4,13 @@ export const store = createStore({
   state() {
     return {
       tasks: [],
+      isLoading: false,
     };
   },
   mutations: {
+    changeLoad(state, load) {
+      state.isLoading = load;
+    },
     addTask(state, task) {
       state.tasks.push(task);
     },
@@ -27,12 +31,14 @@ export const store = createStore({
     // },
     async chFlag(context, payload) {
       context.commit("changeActiv", payload);
-      console.log(payload);
-      await axios.patch(
+      const resp = await axios.patch(
         `https://vuehttp-6614a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${payload.idDb}.json`,
-        { act: payload.act }
+        { act: payload.flag }
       );
+      console.log(payload);
+      context.commit("changeActiv", payload);
     },
+
     async AddTask(context, payload) {
       const resp = await fetch(
         "https://vuehttp-6614a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
@@ -58,23 +64,26 @@ export const store = createStore({
         name: payload.name,
         txt: payload.txt,
       });
-      console.log(firebaseData);
     },
     async getTasks(context) {
+      context.commit("changeLoad", true);
       const resp = await axios.get(
         "https://vuehttp-6614a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
       );
-      const firebaseData = await resp.data;
+      const firebaseData = resp.data;
       const tasks = Object.keys(firebaseData).map((item) => {
         return { ...firebaseData[item], idDb: item };
       });
       context.commit("addTasks", tasks);
-      console.log(tasks);
+      context.commit("changeLoad", false);
     },
   },
   getters: {
     getTasks(state) {
       return state.tasks;
+    },
+    getLoading(state) {
+      return state.isLoading;
     },
     getTaskByID: (state) => (id) => {
       return state.tasks.find((item) => item.id === id);
