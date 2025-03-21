@@ -3,7 +3,6 @@
   <div>
     <h2>Всего активных задач: {{ geCountActivTasks }}</h2>
   </div>
-  {{ isload }}
   <OneTack
     v-for="task in gettasks"
     :name="task.name"
